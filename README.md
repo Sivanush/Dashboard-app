@@ -1,27 +1,89 @@
-# DashboardPage
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
+# SellerApp Frontend Dashboard
 
-## Development server
+This is a responsive dashboard built using **Angular** that dynamically loads country-specific data. It includes several visualizations, interactive components, and features such as country switching, light/dark mode toggle, and more. The project demonstrates the use of Angular, ApexCharts, Chart.js, Tailwind CSS.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
+- **Dashboard Layout**:
+  - Sidebar with navigation options.
+  - Top bar with the title "Dashboard", a country switcher dropdown, and a user profile icon.
+  - Main content area displaying various components.
+  
+- **Country Switcher**:
+  - A dropdown to select a country (USA, Canada, Germany, India).
+  - Dynamically updates the dashboard data to reflect the selected country's stats.
 
-## Code scaffolding
+- **Stat Cards**:
+  - Display metrics such as Total Income, Profit, Total Views, and Conversion Rate.
+  - Percentage change compared to the previous month.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Sales Overview Graph**:
+  - A line chart showing Total Revenue and Total Target trends over time.
+  - Tooltip displaying exact values on hover.
 
-## Build
+- **Sales by Region**:
+  - A radar chart showing sales performance for different regions (Asia, Europe, Pacific, etc.).
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Registered Users**:
+  - Displays the total number of registered users (Premium vs Basic users).
+  - Uses a circular progress bar to show distribution.
 
-## Running unit tests
+- **List of Integrations**:
+  - A table displaying applications (e.g., Stripe, Shopify) with their type, rate progress, and profit values.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Bonus Features**:
+  - Light/Dark mode toggle.
+  - Local storage persistence for selected country.
+  - Loading spinner and skeleton loading for data fetching.
 
-## Running end-to-end tests
+## Technologies Used
+- **Angular**: Framework for building the application.
+- **Tailwind CSS**: For styling and responsive design.
+- **ApexCharts/Chart.js**: For creating visualizations (line chart, radar chart).
+- **LocalStorage**: For saving user preferences (selected country).
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Installation
 
-## Further help
+1. Clone this repository:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+   ```bash
+   git clone https://github.com/yourusername/Dashboard-app.git
+   ```
+
+2. Navigate into the project directory:
+
+   ```bash
+   cd dashboard-app
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Run the application:
+
+   ```bash
+   ng serve
+   ```
+
+5. Open your browser and go to `http://localhost:4200` to view the dashboard.
+
+## Deployment
+
+The application is deployed using **Vercel**. You can access the live demo here:
+
+[Live Demo](https://seller-app-chi.vercel.app/)
+
+## Contributing
+
+Feel free to fork this project and submit pull requests. Please ensure that your code adheres to the project's style guidelines and includes tests where necessary.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Thank you to the maintainers of **ApexCharts**, **Chart.js** for their excellent libraries.
