@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Input, SimpleChanges, ViewChild } from '@angular/core';
 
 import {
   ChartComponent,
@@ -10,8 +10,11 @@ import {
   ApexStroke,
   ApexGrid,
   NgApexchartsModule,
-  ApexTooltip
+  ApexTooltip,
+  ApexTheme
 } from "ng-apexcharts";
+import { DataService } from '../../service/data.service';
+import { CountryT } from '../../interface/interface';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -21,7 +24,8 @@ export type ChartOptions = {
   grid: ApexGrid;
   stroke: ApexStroke;
   title: ApexTitleSubtitle;
-  tooltip:ApexTooltip
+  tooltip:ApexTooltip,
+  theme:ApexTheme
 };
 
 @Component({
@@ -36,18 +40,32 @@ export class SalesOverviewComponent {
   @ViewChild("salesOverviewChart") chart!: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
-  constructor() {
-    this.chartOptions = {
+  @Input() darkTheme!:boolean
+  @Input() country!:CountryT
+
+  totalRevenue!:number[]
+  totalTarget!:number[]
+
+  constructor(private dataService:DataService) {
+    this.getData()
+    this.chartOptions = this.getChartOptions(this.darkTheme);
+  }
+
+
+
+
+  getChartOptions(isDarkMode: boolean): Partial<ChartOptions> {
+    return {
       series: [
         {
           name: "Total Revenue",
-          data: [15, 19, 10, 11, 6, 5, 11, 6, 15, 13],
-          color:'#696FFB'
+          data: [...this.totalRevenue],
+          color: '#696FFB'
         },
         {
-          name:'Total Target',
-          data:[15, 10, 20, 10, 10, 15, 5, 3, 4, 15],
-          color:'#FF9E2B'
+          name: 'Total Target',
+          data: [...this.totalTarget],
+          color: '#FF9E2B'
         }
       ],
       chart: {
@@ -56,9 +74,10 @@ export class SalesOverviewComponent {
         zoom: {
           enabled: false
         },
-        toolbar:{
-          show:false
+        toolbar: {
+          show: false
         },
+        background: isDarkMode ? '#1F214A' : '#FFFFFF'
       },
       dataLabels: {
         enabled: false
@@ -74,20 +93,53 @@ export class SalesOverviewComponent {
       },
       xaxis: {
         categories: [
-         'Apr 2023', 'May 2023', 'Jun 2023', 'Jul 2023', 'Aug 2023', 'Sep 2023', 'Oct 2023', 'Nov 2023', 'Dec 2023', 'Jan 2024'
+          'Apr 2023', 'May 2023', 'Jun 2023', 'Jul 2023', 'Aug 2023', 'Sep 2023', 'Oct 2023', 'Nov 2023', 'Dec 2023', 'Jan 2024'
         ]
       },
       tooltip: {
-        marker: {
-          // enabled: true,
-        },
+        theme: isDarkMode ? 'dark' : 'light',
         fixed: {
           enabled: false,
           position: 'topRight',
           offsetX: 0,
           offsetY: 0,
+        },
       },
+      theme: {
+        mode: isDarkMode ? 'dark' : 'light'
       }
     };
   }
+ 
+  
+    ngOnChanges(changes: SimpleChanges): void {
+      if (changes['darkTheme'] || changes['country']) {
+        this.getData()
+        this.checkDarkMode();
+
+      }
+    }
+
+
+  checkDarkMode() {
+    const isDarkMode = localStorage.getItem('theme') === 'dark'    
+    this.chartOptions = this.getChartOptions(isDarkMode);
+  }
+  
+  getData(){
+    this.dataService.getSalesOverviewData(this.country).subscribe({
+      next:(data)=>{
+        this.totalRevenue = data.revenue
+        this.totalTarget = data.target
+        this.checkDarkMode();
+      }
+    })
+  }
+
+  ngOnInit() {
+    this.getData()
+  }
+
+  
+
 }

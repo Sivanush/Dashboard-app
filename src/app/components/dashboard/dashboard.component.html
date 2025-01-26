@@ -301,55 +301,56 @@
         </nav>
         <main class="flex-1 p-6">
             <div class="grid grid-cols-4 gap-4 mb-6">
-                <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border">
+                <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border" *ngIf="countryData">
                     <div class="text-sm dark:text-white text-gray-600 mb-2">Total Income</div>
-                    <div class="text-2xl dark:text-white font-bold mb-1">$ 33,328.12</div>
-                    <div class="text-xs text-green-500">
-                        <span class="mr-1">+3.65%</span>
+                    <div class="text-2xl dark:text-white font-bold mb-1">${{ countryData.totalIncome | number:'1.2-2' }}</div>
+                    <div class="text-xs" [ngClass]="{'text-green-500': countryData.incomeChange > 0, 'text-red-500': countryData.incomeChange < 0}">
+                        <span class="mr-1">{{ countryData.incomeChange | number:'1.2-2' }}%</span>
                         <span class="text-gray-500">Compared to last month</span>
                     </div>
                 </div>
-
-                <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border">
+            
+                <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border" *ngIf="countryData">
                     <div class="text-sm dark:text-white text-gray-600 mb-2">Profit</div>
-                    <div class="text-2xl dark:text-white font-bold mb-1">$ 8,583.09</div>
-                    <div class="text-xs text-red-500">
-                        <span class="mr-1">-2.65%</span>
+                    <div class="text-2xl dark:text-white font-bold mb-1">${{ countryData.profit | number:'1.2-2' }}</div>
+                    <div class="text-xs" [ngClass]="{'text-green-500': countryData.profitChange > 0, 'text-red-500': countryData.profitChange < 0}">
+                        <span class="mr-1">{{ countryData.profitChange | number:'1.2-2' }}%</span>
                         <span class="text-gray-500">Compared to last month</span>
                     </div>
                 </div>
-
-                <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border">
-                    <div class="text-sm dark:text-white text-gray-600 mb-2">Total views</div>
-                    <div class="text-2xl dark:text-white font-bold mb-1">52,234.32</div>
-                    <div class="text-xs text-green-500">
-                        <span class="mr-1">+5.65%</span>
+            
+                <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border" *ngIf="countryData">
+                    <div class="text-sm dark:text-white text-gray-600 mb-2">Total Views</div>
+                    <div class="text-2xl dark:text-white font-bold mb-1">{{ countryData.totalViews | number:'1.0-2' }}</div>
+                    <div class="text-xs" [ngClass]="{'text-green-500': countryData.viewsChange > 0, 'text-red-500': countryData.viewsChange < 0}">
+                        <span class="mr-1">{{ countryData.viewsChange | number:'1.2-2' }}%</span>
                         <span class="text-gray-500">Compared to last month</span>
                     </div>
                 </div>
-
-                <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border">
-                    <div class="text-sm dark:text-white text-gray-600 mb-2">Conversion rate</div>
-                    <div class="text-2xl dark:text-white font-bold mb-1">6,12%</div>
-                    <div class="text-xs text-green-500">
-                        <span class="mr-1">+8.45%</span>
+            
+                <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border" *ngIf="countryData">
+                    <div class="text-sm dark:text-white text-gray-600 mb-2">Conversion Rate</div>
+                    <div class="text-2xl dark:text-white font-bold mb-1">{{ countryData.conversionRate | number:'1.2-2' }}%</div>
+                    <div class="text-xs" [ngClass]="{'text-green-500': countryData.conversionChange > 0, 'text-red-500': countryData.conversionChange < 0}">
+                        <span class="mr-1">{{ countryData.conversionChange | number:'1.2-2' }}%</span>
                         <span class="text-gray-500">Compared to last month</span>
                     </div>
                 </div>
             </div>
+            
 
             <div class="grid grid-cols-3 gap-4 mb-6">
                 <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border col-span-2">
                     <h3 class="text-base font-medium mb-1 dark:text-white">Sales Overview</h3>
-                    <div class="h-[200px]">
-                        <app-sales-overview></app-sales-overview>
+                    <div class="h-[250px]">
+                        <app-sales-overview [darkTheme]="isDarkTheme" [country]="selectedCountry"></app-sales-overview>
                     </div>
                 </div>
 
                 <div class="bg-white dark:border-[#434467] dark:bg-[#1F214A] p-4 rounded-lg border">
                     <h3 class="text-base font-medium mb-1 dark:text-white">Sales by Region</h3>
-                    <div class="h-[200px] flex items-center justify-center">
-                        <app-sales-by-region></app-sales-by-region>
+                    <div class="h-[250px] flex items-center justify-center">
+                        <app-sales-by-region [darkTheme]="isDarkTheme" [country]="selectedCountry" ></app-sales-by-region>
                     </div>
                 </div>
             </div>

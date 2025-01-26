@@ -6,7 +6,7 @@ import { SalesOverviewComponent } from "../sales-overview/sales-overview.compone
 import { ListOfIntegrationsComponent } from "../list-of-integrations/list-of-integrations.component";
 import { RegisteredUserComponent } from "../registered-user/registered-user.component";
 import { DataService } from '../../service/data.service';
-import { CountryT } from '../../interface/interface';
+import { CountryDataI, CountryT } from '../../interface/interface';
 import { FormsModule } from '@angular/forms';
 
 Chart.register(...registerables);
@@ -27,11 +27,15 @@ export class DashboardComponent {
 
   isDarkTheme: boolean = false
   isSidebarToggle = false
+  countryData!:CountryDataI
 
 
   constructor(private dataService:DataService) {}
 
   ngOnInit() {
+
+    this.getMainData()
+
 
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
@@ -46,47 +50,28 @@ export class DashboardComponent {
       
       this.selectedCountry = currentCountry  as CountryT
     }
+  }
 
 
-
+  getMainData(){
+    this.dataService.getMainCountryData(this.selectedCountry).subscribe({
+      next:(data)=>{
+        this.countryData = data
+        console.log(this.countryData);
+        
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
   }
 
   onCountryChange(event: Event) {
     const target = event.target as HTMLSelectElement; 
     this.selectedCountry = target.value as CountryT    
     localStorage.setItem('country',this.selectedCountry)
+    this.getMainData()
   }
-
-  
-
-  initSalesOverviewChart() {
-    const ctx = document.getElementById('salesOverviewChart') as HTMLCanvasElement;
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Apr 2023', 'May 2023', 'Jun 2023', 'Jul 2023', 'Aug 2023', 'Sep 2023', 'Oct 2023', 'Nov 2023', 'Dec 2023', 'Jan 2024'],
-        datasets: [{
-          label: 'Total Revenue',
-          data: [65, 59, 80, 81, 56, 55, 40, 60, 55, 30],
-          borderColor: 'rgb(99, 102, 241)',
-          tension: 0.4
-        },
-        {
-          label: 'Total Target',
-          data: [45, 70, 60, 90, 50, 45, 35, 50, 40, 35],
-          borderColor: 'rgb(147, 51, 234)',
-          tension: 0.4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false
-      }
-    });
-  }
-
-
-
 
 
   toggleDarkMode() {
