@@ -1,0 +1,31 @@
+<div>
+    <h3 class="text-base font-semibold mb-1 dark:text-white">Registered Users</h3>
+    <div class="flex justify-center mb-4">
+        <div class="relative">
+            <canvas id="registeredUsersChart" width="200" height="100"></canvas>
+            <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                <div class="text-2xl font-bold dark:text-white">{{PremiumUserCount+basicUserCount | currencyFormat}}</div>
+                <div class="text-sm text-gray-500">Total users</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-between text-sm mt-16">
+        <div class="flex gap-3 relative">
+            <div class="h-8 w-1 bg-[#696FFB] rounded-md"></div>
+            <div class="flex flex-col gap-2 ">
+                <span style="margin: 0px;"
+                    class="ml-2 font-semibold absolute -top-2 left-3 dark:text-white">{{PremiumUserCount | currencyFormat}}</span>
+                <span class="text-gray-500 absolute -bottom-2 text-nowrap left-3">Premium Users</span>
+            </div>
+        </div>
+        <div class="flex gap-3 relative">
+            <div class="flex flex-col gap-2 ">
+                <span style="margin: 0px;"
+                    class="ml-2 font-semibold absolute -top-2 right-3 dark:text-white">{{basicUserCount | currencyFormat}}</span>
+                <span class="text-gray-500 absolute -bottom-2 text-nowrap right-3">Basic Users</span>
+            </div>
+            <div class="h-8 w-1 bg-[#696FFB99] rounded-md"></div>
+        </div>
+    </div>
+</div>
